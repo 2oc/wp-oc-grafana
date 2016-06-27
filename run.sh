@@ -6,8 +6,8 @@
 
 echo "grafana:x:`id -u`:0:oc:/grafana:/sbin/nologin" >> /etc/passwd
 
-chown -R grafana:root "$GF_PATHS_DATA" "$GF_PATHS_LOGS"
-chown -R grafana:root /etc/grafana
+# chown -R grafana:root "$GF_PATHS_DATA" "$GF_PATHS_LOGS"
+# chown -R grafana:root /etc/grafana
 
 if [ ! -z ${GF_AWS_PROFILES+x} ]; then
     mkdir -p ~grafana/.aws/
@@ -28,7 +28,7 @@ if [ ! -z ${GF_AWS_PROFILES+x} ]; then
         fi
     done
 
-    chown grafana:root -R ~grafana/.aws
+    # chown grafana:root -R ~grafana/.aws
     chmod 600 ~grafana/.aws/credentials
 fi
 
