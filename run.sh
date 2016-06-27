@@ -1,8 +1,6 @@
 #!/bin/bash -e
 
-: "${GF_PATHS_DATA:=/var/lib/grafana}"
-: "${GF_PATHS_LOGS:=/var/log/grafana}"
-: "${GF_PATHS_PLUGINS:=/var/lib/grafana/plugins}"
+mkdir /var/lib/grafana/plugins/
 
 echo "grafana:x:`id -u`:0:oc:/grafana:/sbin/nologin" >> /etc/passwd
 
@@ -37,11 +35,9 @@ if [ ! -z ${GF_INSTALL_PLUGINS} ]; then
   IFS=$OLDIFS
 fi
 
-#exec
-
-/usr/sbin/grafana-server  \
+exec /usr/sbin/grafana-server  \
   --homepath=/usr/share/grafana             \
   --config=/etc/grafana/grafana.ini         \
-  cfg:default.paths.data="$GF_PATHS_DATA"   \
-  cfg:default.paths.logs="$GF_PATHS_LOGS"   \
-  cfg:default.paths.plugins="$GF_PATHS_PLUGINS"
+  cfg:default.paths.data=/var/lib/grafana   \
+  cfg:default.paths.logs=/var/log/grafana   \
+  cfg:default.paths.plugins=/var/lib/grafana/plugins
